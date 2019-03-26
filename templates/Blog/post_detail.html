@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="jumbotron">
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.text|linebreaksbr }}</p>
+        {% if post.published_date %}
+            <div class="date">
+                {{ post.published_date }}
+            </div>
+        {% endif %}
+        <p>{{ post.author_post }}</p>
+      </div>
+
+    {% if user.is_authenticated %}
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" name="like" value="done">LIKE:{{ post.like_set.all.count }}</button>
+        {% if request.user == post.author_post %}
+        <button type="submit" name="delete" value="done">DELETE</button>
+    </form>
+    <a href="{% url 'post_edit' pk=post.pk %}" class="btn btn-primary">EDIT</a>
+        {% endif %}
+    {% endif %}
+
+    <h3>Comments({{ post.comment_set.all.count }})<br><a href="{% url 'post_comment' pk=post.pk %}">Write Your Comment</a></h3>
+
+      {% for comment in post.comment_set.all %}
+              <div class="jumbotron">
+      <ul>
+        <h3>{{ comment.text }}</h3> <br>
+        <p><strong>By:</strong>{{ comment.author_comment }}</p>
+        <p><strong>published:</strong>{{ comment.published_date }}</p>
+              </div>
+      </ul>
+      {% endfor %}
+
+  </body>
+</html>
+
+{% endblock %}
