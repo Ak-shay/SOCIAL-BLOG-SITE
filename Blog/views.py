@@ -4,7 +4,6 @@ from django.utils import timezone
 from .forms import PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
 
-
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
     return render(request,'Blog/post_list.html',{'posts':posts})
@@ -23,11 +22,10 @@ def post_detail(request, pk):    #details of given post
         #user like the post
         else:
             l = Like()
-            l.author_like = request.user
             l.liked_post = post
-            l.published_date = timezone.now()
+            l.author_like = request.user
+            l.publish()
             l.save()
-            post.save()
 
     #cliking the DELETE button (only author of post can delete)
     #deletes the post and redirect to post list
@@ -45,8 +43,7 @@ def post_new(request):   #making new post for blog
         if form.is_valid():
             post = form.save(commit=False)
             post.author_post = request.user
-            post.published_date = timezone.now()
-            post.save()
+            post.publish()
             return redirect('post_detail',pk=post.pk)
     else:
         form = PostForm()
@@ -58,12 +55,10 @@ def post_comment(request,pk):
     if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
-            comment = form
             comment = form.save(commit=False)
             comment.post = post
             comment.author_comment = request.user
-            comment.published_date = timezone.now()
-            comment.save()
+            comment.publish()
             return redirect('post_detail',pk=pk)
     else:
         form = CommentForm()
@@ -78,8 +73,7 @@ def post_edit(request, pk):
             if form.is_valid():
                 post = form.save(commit=False)
                 post.author_post = request.user
-                post.published_date = timezone.now()
-                post.save()
+                post.publish()
                 return redirect('post_detail',pk=post.pk)
     form = PostForm()
     return render(request,'Blog/post_new.html',{'form':form})
