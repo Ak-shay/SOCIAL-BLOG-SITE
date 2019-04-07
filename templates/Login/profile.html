@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load account %}
 {% block content %}
-<h4>USERNAME:{{ author_post.username }}</h4>
-<h4>EMAIL:{{ author_post.email }}</h4>
+<h4>USERNAME:{{ user.get_username }}</h4>
+<h4>NAME:{{ user.first_name }}  {{ user.last_name }}</h4>
+<h4>EMAIL:{{ user.email }}</h4>
+{% if not user.has_usable_password %}
+<a href="{% url 'account_set_password' %}">set your password</a>
+{% endif %}
 {% endblock %}

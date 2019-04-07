@@ -1,8 +1,11 @@
+from django.conf import settings
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post, Like
+from django.core.mail import send_mail
+from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from .forms import PostForm, CommentForm
-from django.contrib.auth.decorators import login_required
+from .models import Post, Like
+
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
@@ -43,6 +46,7 @@ def post_new(request):   #making new post for blog
         if form.is_valid():
             post = form.save(commit=False)
             post.author_post = request.user
+            send_mail(subject="New Blog",message="you have created a new blog.",from_email=settings.EMAIL_HOST_USER,recipient_list=[request.user.email],fail_silently=False)
             post.publish()
             return redirect('post_detail',pk=post.pk)
     else:
