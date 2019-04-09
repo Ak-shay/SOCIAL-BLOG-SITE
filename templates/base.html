@@ -2,8 +2,8 @@
 <html>
     <head>
         <title>BLOG</title>
-        <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
         <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
     </head>
       <body>
 
@@ -21,7 +21,7 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'post_new' %}" class="top-menu">MAKE NEW POST</a>
               <li class="nav-item">
-              <a class="nav-link"  href="{% url 'profile' %}">{{ user.username }}</a></li>
+              <a class="nav-link"  href="{% url 'profile' %}">{{ user.first_name }}</a></li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'account_logout' %}">logout</a></li>
               {% else %}

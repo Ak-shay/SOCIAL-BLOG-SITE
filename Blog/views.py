@@ -4,12 +4,14 @@ from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from .forms import PostForm, CommentForm
-from .models import Post, Like
+from .models import Post, Like, Comment
 
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
     return render(request,'Blog/post_list.html',{'posts':posts})
+
+
 
 @login_required
 def post_detail(request, pk):    #details of given post
@@ -37,7 +39,16 @@ def post_detail(request, pk):    #details of given post
             post.delete()
             return redirect('post_list')
 
+    comments = post.comment_set.all()
+    for comment in comments:
+        #deleting comments
+        #only author of post or comment can delete it
+        if request.POST.get('comment_del') == 'done':
+            if (request.user == comment.author_comment or request.user == post.author_post):
+                comment.delete()
+
     return render(request,'Blog/post_detail.html',{'post':post})
+
 
 @login_required
 def post_new(request):   #making new post for blog

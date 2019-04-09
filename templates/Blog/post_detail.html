@@ -10,28 +10,36 @@
             </div>
         {% endif %}
         <p>{{ post.author_post }}</p>
+    
+        {% if user.is_authenticated %}
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" name="like" class="btn btn-primary" value="done">LIKE:{{ post.like_set.all.count }}</button><br><br>
+            {% if request.user == post.author_post %}
+            <button type="submit" name="delete" class="btn btn-primary" value="done">DELETE</button>
+        </form>
+        <a href="{% url 'post_edit' pk=post.pk %}" class="btn btn-primary">EDIT</a>
+            {% endif %}
+        {% endif %}
       </div>
 
-    {% if user.is_authenticated %}
-    <form method="POST">
-        {% csrf_token %}
-        <button type="submit" name="like" value="done">LIKE:{{ post.like_set.all.count }}</button>
-        {% if request.user == post.author_post %}
-        <button type="submit" name="delete" value="done">DELETE</button>
-    </form>
-    <a href="{% url 'post_edit' pk=post.pk %}" class="btn btn-primary">EDIT</a>
-        {% endif %}
-    {% endif %}
 
     <h3>Comments({{ post.comment_set.all.count }})<br><a href="{% url 'post_comment' pk=post.pk %}">Write Your Comment</a></h3>
 
       {% for comment in post.comment_set.all %}
-              <div class="jumbotron">
+        <div class="jumbotron">
       <ul>
         <h3>{{ comment.text }}</h3> <br>
         <p><strong>By:</strong>{{ comment.author_comment }}</p>
         <p><strong>published:</strong>{{ comment.published_date }}</p>
-              </div>
+        {% if request.user == comment.author_comment or request.user == post.author_post %}
+        <form method="POST">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary" name="comment_del" value="done">DELETE</button>
+        </form>
+        {% endif %}
+
+        </div>
       </ul>
       {% endfor %}
 
