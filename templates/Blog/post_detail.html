@@ -9,8 +9,7 @@
                 {{ post.published_date }}
             </div>
         {% endif %}
-        <p>{{ post.author_post }}</p>
-    
+        <p><a href="{% url 'any_profile' pk=post.author_post.pk %}">{{ post.author_post }}</a></p>
         {% if user.is_authenticated %}
         <form method="POST">
             {% csrf_token %}
@@ -30,7 +29,7 @@
         <div class="jumbotron">
       <ul>
         <h3>{{ comment.text }}</h3> <br>
-        <p><strong>By:</strong>{{ comment.author_comment }}</p>
+        <p><strong>By:</strong><a href="{% url 'any_profile' pk=comment.author_comment.pk %}">{{ comment.author_comment }}</a></p>
         <p><strong>published:</strong>{{ comment.published_date }}</p>
         {% if request.user == comment.author_comment or request.user == post.author_post %}
         <form method="POST">

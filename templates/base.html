@@ -7,36 +7,27 @@
     </head>
       <body>
 
-      <nav class="navbar justify-content-between navbar-expand-lg navbar-dark bg-dark">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <a class="navbar-brand" href="">BLOG</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul class="navbar-nav">
+          <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
               <a class="nav-link" href="{% url 'post_list' %}">Home <span class="sr-only">(current)</span></a>
             </li>
-              {% if user.is_authenticated %}
+          {% if user.is_authenticated %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'post_new' %}" class="top-menu">MAKE NEW POST</a>
-              <li class="nav-item">
-              <a class="nav-link"  href="{% url 'profile' %}">{{ user.first_name }}</a></li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'account_logout' %}">logout</a></li>
-              {% else %}
-          <li class="nav-item"><a class="nav-link" href="{% url 'account_login' %}">login</a></li>
-              {% endif %}
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown link
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">{{ user.first_name }}</a></l>
+              <li class="nav-item"><a class="nav-link" href="{% url 'my_post_list' pk=request.user.pk %}">My Posts</a></l>
+          </ul>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="{% url 'account_logout' %}">Logout</a></li>
+          {% else %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'account_login' %}">login</a></li>
+          {% endif %}
           </ul>
         </div>
       </nav>

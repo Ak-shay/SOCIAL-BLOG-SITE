@@ -4,4 +4,5 @@ from . import views
 urlpatterns = [
 	path('accounts/', include('allauth.urls')),
     path('accounts/profile/', views.user_profile, name = 'profile'),
+	path('profile/<int:pk>', views.any_profile, name= 'any_profile'),
 ]

@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% load account %}
+{% block content %}
+<h4>USERNAME:{{ any_user.get_username }}</h4>
+<h4>NAME:{{ any_user.first_name }}  {{ any_user.last_name }}</h4>
+<h4>EMAIL:{{ any_user.email }}</h4>
+<h4><a href="{% url 'my_post_list' pk=any_user.pk %}">Recent posts</a></h4>
+{% endblock %}

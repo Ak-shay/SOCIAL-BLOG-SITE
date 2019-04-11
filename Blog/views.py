@@ -11,6 +11,10 @@ def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
     return render(request,'Blog/post_list.html',{'posts':posts})
 
+@login_required
+def my_post_list(request, pk):   #posts of a particular user.
+    posts = Post.objects.filter(author_post=pk).order_by('-published_date')
+    return render(request,'Blog/post_list.html',{'posts':posts})
 
 
 @login_required
