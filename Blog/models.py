@@ -40,3 +40,15 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.text
+
+class CommentLike(models.Model):
+    author_like = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    published_date = models.DateTimeField(blank=True, null=True)
+    liked_comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+
+    def publish(self):
+        self.published_date = timezone.now()
+        self.save()
+
+    def __str__(self):
+        return self.liked_comment.text

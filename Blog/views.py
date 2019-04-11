@@ -4,7 +4,7 @@ from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from .forms import PostForm, CommentForm
-from .models import Post, Like, Comment
+from .models import Post, Like, Comment, CommentLike
 
 
 def post_list(request):
@@ -50,6 +50,20 @@ def post_detail(request, pk):    #details of given post
         if request.POST.get('comment_del') == 'done':
             if (request.user == comment.author_comment or request.user == post.author_post):
                 comment.delete()
+
+        if request.POST.get('comment_like') == 'done':
+            #user already liked the comment
+            if comment.commentlike_set.filter(author_like=request.user):
+                c = comment.commentlike_set.get(author_like = request.user)
+                c.delete()
+                comment.save()
+            #user like the comment
+            else:
+                c = CommentLike()
+                c.liked_comment = comment
+                c.author_like = request.user
+                c.publish()
+                c.save()
 
     return render(request,'Blog/post_detail.html',{'post':post})
 
