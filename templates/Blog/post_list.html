@@ -2,12 +2,14 @@
 
 {% block content %}
 {% for post in posts %}
-<h3><a href="{% url 'post_detail' pk=post.pk %}">Title:{{ post.title }}</a></h3>
-<h4>{{ post.text }}</h4>
-<h4>By   <a href="{% url 'any_profile' pk=post.author_post.pk %}">{{ post.author_post }}</a></h4>
-<h4>published on {{ post.published_date }}</h4>
-<h4>likes:{{ post.like_set.all.count }}</h4>
-<h4>Comments:{{ post.comment_set.all.count }}</h4>
+<br>
+<div class="jumbotron text-center border border-primary">
+  <h3><a href="{% url 'post_detail' pk=post.pk %}">Title:{{ post.title }}</a></h3>
+  <h4>{{ post.text }}</h4>
+  <h4>By   <a href="{% url 'any_profile' pk=post.author_post.pk %}">{{ post.author_post }}</a></h4>
+  <h4>published on {{ post.published_date }}</h4>
+  <h4>likes:{{ post.like_set.all.count }}</h4>
+  <h4>Comments:{{ post.comment_set.all.count }}</h4>
+</div>
 {% endfor %}
-
 {% endblock %}

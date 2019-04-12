@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
-
-    <div class="jumbotron">
+<br>
+    <div class="jumbotron border border-dark">
+        <div class="text-center">
         <h2>{{ post.title }}</h2>
         <p>{{ post.text|linebreaksbr }}</p>
         {% if post.published_date %}
@@ -13,34 +14,40 @@
         {% if user.is_authenticated %}
         <form method="POST">
             {% csrf_token %}
-            <button type="submit" name="like" class="btn btn-primary" value="done">LIKE:{{ post.like_set.all.count }}</button><br><br>
+            <button type="submit" name="like" class="btn btn-primary" value="done">LIKE:{{ post.like_set.all.count }}</button>
             {% if request.user == post.author_post %}
             <button type="submit" name="delete" class="btn btn-primary" value="done">DELETE</button>
         </form>
         <a href="{% url 'post_edit' pk=post.pk %}" class="btn btn-primary">EDIT</a>
             {% endif %}
         {% endif %}
-      </div>
-
-
-    <h3>Comments({{ post.comment_set.all.count }})<br><a href="{% url 'post_comment' pk=post.pk %}">Write Your Comment</a></h3>
-
-      {% for comment in post.comment_set.all %}
-        <div class="jumbotron">
-      <ul>
-        <h3>{{ comment.text }}</h3> <br>
-        <p><strong>By:</strong><a href="{% url 'any_profile' pk=comment.author_comment.pk %}">{{ comment.author_comment }}</a></p>
-        <p><strong>published:</strong>{{ comment.published_date }}</p>
-        <form method="POST">
-          {% csrf_token %}
-          <button type="submit" class="btn btn-primary" name="comment_like" value="done" >LIKE:{{ comment.commentlike_set.all.count }}</button>
-        {% if request.user == comment.author_comment or request.user == post.author_post %}
-          <button type="submit" class="btn btn-primary" name="comment_del" value="done">DELETE</button>
-        </form>
-        {% endif %}
-
         </div>
-      </ul>
+      </div>
+    <div class="row">
+      <div class="col-sm-2">
+      </div>
+      <div class="col-sm-8">
+      <h3>Comments({{ post.comment_set.all.count }})<br><a href="{% url 'post_comment' pk=post.pk %}">Write Your Comment</a></h3>
+        {% for comment in post.comment_set.all %}
+        <div class="jumbotron">
+          <div class="text-center">
+            <ul>
+              <h3>{{ comment.text }}</h3> <br>
+              <p><strong>By:</strong><a href="{% url 'any_profile' pk=comment.author_comment.pk %}">{{ comment.author_comment }}</a></p>
+              <p><strong>published:</strong>{{ comment.published_date }}</p>
+              <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary" name="comment_like" value="done" >LIKE:{{ comment.commentlike_set.all.count }}</button>
+              {% if request.user == comment.author_comment or request.user == post.author_post %}
+                <button type="submit" class="btn btn-primary" name="comment_del" value="done">DELETE</button>
+              </form>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
       {% endfor %}
 
   </body>

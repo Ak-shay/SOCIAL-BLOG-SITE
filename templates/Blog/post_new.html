@@ -1,10 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
 {% if user.is_authenticated %}
-<form method="POST">
-  {% csrf_token %}
- {{ form.as_p }}
- <input type="submit" value="POST">
-</form>
+<br>
+<div class="jumbotron text-center border border-primary">
+  <h3>Make Your Post</h3><br>
+  <form method="POST" class="form-horizontal">
+      {% csrf_token %}
+     {{ form.as_p }}
+  <input type="submit" class="alert" value="POST">
+  </form>
+</div>
+
+
 {% endif %}
 {% endblock %}
