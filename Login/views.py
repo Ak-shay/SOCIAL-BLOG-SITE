@@ -11,3 +11,7 @@ def user_profile(request):
 def any_profile(request, pk):
     any_user = User.objects.get(pk=pk)
     return render(request, 'Login/any_profile.html',{'any_user':any_user})
+
+@login_required
+def settings(request):
+    return render(request, 'Login/settings.html',{})
