@@ -3,10 +3,10 @@ from . import views
 
 
 urlpatterns = [
-	path('',views.post_list,name = 'post_list'),
-    path('post/<int:pk>/',views.post_detail,name='post_detail'),
-	path('post/new/',views.post_new,name = 'post_new'),
-	path('post/<int:pk>/edit/',views.post_edit,name = 'post_edit'),
-	path('post/<int:pk>/comment/',views.post_comment,name = 'post_comment'),
-	path('posts/<int:pk>',views.my_post_list, name='my_post_list'),
+	path('',views.PostListView.as_view(), name='post_list'),
+	path('<int:pk>/myposts/',views.SelfPostListView.as_view(), name='my_post_list'),
+    path('posts/<int:pk>/',views.PostView.as_view(), name='post_detail'),
+	path('posts/new/',views.PostCreateView.as_view(), name = 'post_new'),
+	path('posts/<int:pk>/edit/',views.PostUpdateView.as_view(), name = 'post_edit'),
+	path('posts/<int:pk>/comment/',views.CommentCreateView.as_view(), name = 'post_comment'),
 ]
