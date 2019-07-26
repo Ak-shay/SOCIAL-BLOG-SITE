@@ -22,10 +22,11 @@
             </li>
           {% if user.is_authenticated %}
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'post_new' %}" class="top-menu">MAKE NEW POST</a>
-                <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">{{ user.first_name }}</a></l>
-          <li class="nav-item"><a class="nav-link" href="{% url 'my_post_list' pk=request.user.pk %}">My Posts</a></l>
-            <li class="nav-item"><a class="nav-link" href="{% url 'account_logout' %}">Logout</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'post_new' %}" class="top-menu">MAKE NEW POST</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'myfeed' %}">My Feed</a></l>
+              <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">{{ user.first_name }}</a></l>
+              <li class="nav-item"><a class="nav-link" href="{% url 'my_post_list' pk=request.user.pk %}">My Posts</a></l>
+              <li class="nav-item"><a class="nav-link" href="{% url 'account_logout' %}">Logout</a></li>
           {% else %}
             <li class="nav-item"><a class="nav-link" href="{% url 'account_login' %}"><span class="glyphicon glyphicon-log-in"></span> login</a></li>
           {% endif %}

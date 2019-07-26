@@ -158,3 +158,5 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
 EMAIL_USE_TLS = True  ##only for gmail and google apps
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+AUTH_USER_MODEL = 'Blog.CustomUser'

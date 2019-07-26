@@ -7,5 +7,17 @@
   <h4>USERNAME:{{ user.get_username }}</h4>
   <h4>NAME:{{ user.first_name }}  {{ user.last_name }}</h4>
   <h4>EMAIL:{{ user.email }}</h4>
+  FOLLOWERS:<br>
+  {% for follower in followers %}
+  <a href="{% url 'any_profile' pk=follower.pk %}">{{ follower.username }}</a><br>
+  {% endfor %}
+  FOLLOWING:<br>
+  {% for follow in following %}
+  <a href="{% url 'any_profile' pk=follow.pk %}">{{ follow.username }}</a><br>
+  {% endfor %}
+  SUBSCRIBERS:<br>
+  {% for sub in subscribers %}
+  <a href="{% url 'any_profile' pk=sub.pk %}">{{ sub.username }}</a><br>
+  {% endfor %}
 </div>
 {% endblock %}
